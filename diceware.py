@@ -5,16 +5,19 @@ import string
 import sys
 import math
 
-wordsfile = 'diceware.wordlist.asc.txt'
-f = open(wordsfile)
-lines = f.readlines()
-words = map(lambda x: x.split()[1], lines)
+# return (passString, bitsentropy)
+def diceware(numwords, r=random.SystemRandom(), wordsfile='diceware.wordlist.asc.txt'):
+    f = open(wordsfile)
+    lines = f.readlines()
+    words = map(lambda x: x.split()[1], lines)
 
-r = random.SystemRandom()
+    rv = [r.choice(words).capitalize() for i in xrange(numwords)]
 
-numwords = int(sys.argv[1])
+    pw = ''.join(rv)
+    entropy = math.log(len(words)**numwords)/math.log(2)
+    return (pw, entropy)
 
-rv = [r.choice(words).capitalize() for i in xrange(numwords)]
-print ''.join(rv)
-print 'entropy: ',
-print math.log(len(words)**numwords)/math.log(2)
+if __name__ == '__main__':
+    (pw, entropy) = diceware(int(sys.argv[1]))
+    print pw
+    print 'entropy: %f bits' % entropy
