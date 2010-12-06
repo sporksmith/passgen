@@ -5,25 +5,23 @@ import string
 import sys
 import math
 
-def pairs(numpairs, r=random.SystemRandom(), useCaps=True):
-    vowels = set('aeiou')
-    cons = set(string.lowercase) - vowels
+def chars(numchars, r=random.SystemRandom()):
+    candidates = set()
+    candidates.update(string.ascii_lowercase)
+    candidates.update(string.ascii_uppercase)
+    candidates.update(string.punctuation)
+    candidates.update(string.digits)
 
     # r.choice requires an indexable data structure
-    vowels = list(vowels)
-    cons = list(cons)
+    candidates = list(candidates)
 
-    rand_pair = lambda: (r.choice(cons) + r.choice(vowels))
-
-    pw = [rand_pair() for i in xrange(numpairs)]
-    if useCaps:
-        pw = map(lambda x: r.choice([x, x.upper()]), pw)
+    pw = [r.choice(candidates) for i in xrange(numchars)]
     pw = ''.join(pw)
-    entropy = math.log((len(cons)*len(vowels)*(useCaps and 4 or 1))**numpairs)/math.log(2)
+    entropy = math.log(len(candidates)**numchars)/math.log(2)
     return (pw, entropy)
 
 if __name__ == '__main__':
-    (pw, entropy) = pairs(int(sys.argv[1]), useCaps=(sys.argv[2]=='t'))
+    (pw, entropy) = chars(int(sys.argv[1]))
     print pw
     print 'entropy: %f bits' % entropy
 
