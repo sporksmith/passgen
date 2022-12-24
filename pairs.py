@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import random
 import string
@@ -7,7 +7,7 @@ import math
 
 def pairs(numpairs, r=random.SystemRandom(), useCaps=True):
     vowels = set('aeiou')
-    cons = set(string.lowercase) - vowels
+    cons = set(string.ascii_lowercase) - vowels
 
     # r.choice requires an indexable data structure
     vowels = list(vowels)
@@ -15,7 +15,7 @@ def pairs(numpairs, r=random.SystemRandom(), useCaps=True):
 
     rand_pair = lambda: (r.choice(cons) + r.choice(vowels))
 
-    pw = [rand_pair() for i in xrange(numpairs)]
+    pw = [rand_pair() for i in range(numpairs)]
     if useCaps:
         pw = map(lambda x: r.choice([x, x.upper()]), pw)
     pw = ''.join(pw)
@@ -24,6 +24,6 @@ def pairs(numpairs, r=random.SystemRandom(), useCaps=True):
 
 if __name__ == '__main__':
     (pw, entropy) = pairs(int(sys.argv[1]), useCaps=(sys.argv[2]=='t'))
-    print pw
-    print 'entropy: %f bits' % entropy
+    print(pw)
+    print('entropy: %f bits' % entropy)
 
