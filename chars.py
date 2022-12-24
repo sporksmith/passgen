@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import random
 import string
@@ -26,7 +26,7 @@ class charsPass:
         return length
 
     def generate_length(self, length):
-        pw = [self.r.choice(self.candidates) for i in xrange(length)]
+        pw = [self.r.choice(self.candidates) for i in range(length)]
         pw = ''.join(pw)
         return (pw, self.entropy_of_length(length))
 
@@ -37,5 +37,5 @@ class charsPass:
 if __name__ == '__main__':
     g = charsPass(useLower=True, useUpper=True, usePunct=True, useDigits=True)
     (pw, entropy) = g.generate_length(int(sys.argv[1]))
-    print pw
-    print 'entropy: %f bits' % entropy
+    print(pw)
+    print('entropy: %f bits' % entropy)
